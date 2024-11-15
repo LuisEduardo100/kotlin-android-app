@@ -7,12 +7,12 @@ import com.felipe.gestaofinanceira.data.datasource.service.ExpenseApiService
 class ExpenseApiDataSource(
     private val expenseApiService: ExpenseApiService = RetrofitUtil.getExpenseApiService()
 ) {
-    suspend fun get(id: String): Result<Expense> {
+    suspend fun get(id: String): Result<Expense?> {
         val response = expenseApiService.get(id)
         if (response.isSuccessful) {
             return Result.success(response.body()!!)
         }
-        return Result.failure(Exception("Failed to get Expense from API"))
+        return Result.failure(Exception("GET ERROR"))
     }
 
     suspend fun getAll(): Result<List<Expense>> {
@@ -20,7 +20,7 @@ class ExpenseApiDataSource(
         if (response.isSuccessful) {
             return Result.success(response.body()!!)
         }
-        return Result.failure(Exception("Failed to get Expenses from API"))
+        return Result.failure(Exception("GET ALL ERROR"))
     }
 
     suspend fun create(expense: Expense): Result<Expense> {
@@ -28,7 +28,7 @@ class ExpenseApiDataSource(
         if (response.isSuccessful) {
             return Result.success(response.body()!!)
         }
-        return Result.failure(Exception("Failed to create Expense from API"))
+        return Result.failure(Exception("CREATE ERROR"))
     }
 
     suspend fun delete(id: String): Result<Expense> {
@@ -36,7 +36,7 @@ class ExpenseApiDataSource(
         if (response.isSuccessful) {
             return Result.success(response.body()!!)
         }
-        return Result.failure(Exception("Failed to delete Expense from API"))
+        return Result.failure(Exception("DELETE ERROR"))
     }
 
     suspend fun update(id: String, expense: Expense): Result<Expense> {
@@ -44,6 +44,6 @@ class ExpenseApiDataSource(
         if (response.isSuccessful) {
             return Result.success(response.body()!!)
         }
-        return Result.failure(Exception("Failed to update Expense from API"))
+        return Result.failure(Exception("UPDATE ERROR"))
     }
 }

@@ -7,9 +7,9 @@ import kotlin.math.exp
 class ExpenseRepository(
     private val expenseApiDataSource: ExpenseApiDataSource = ExpenseApiDataSource()
 ) {
-    suspend fun get(id: String): Expense {
+    suspend fun get(id: String): Expense? {
         val result = expenseApiDataSource.get(id)
-        return result.getOrThrow()
+        return result.getOrNull()
     }
 
     suspend fun getAll(): List<Expense> {

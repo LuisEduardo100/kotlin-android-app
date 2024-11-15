@@ -1,72 +1,11 @@
 {
   "income": [
     {
-      "id": "teste da silva",
-      "date": "Nov 14, 2024 12:23:56 AM",
-      "title": "asfdoif",
-      "value": 22.2
-    },
-    {
-      "id": "teste da silva",
-      "date": "Nov 14, 2024 12:23:56 AM",
-      "title": "asfdoif",
-      "value": 22.2
-    },
-    {
-      "id": "teste da silva",
-      "date": "Nov 14, 2024 12:23:56 AM",
-      "title": "asfdoif",
-      "value": 22.2
-    },
-    {
-      "id": "teste da silva",
-      "date": "Nov 14, 2024 12:23:56 AM",
-      "title": "asfdoif",
-      "value": 22.2
-    },
-    {
-      "id": "teste da silva",
-      "date": "Nov 14, 2024 12:23:56 AM",
-      "title": "asfdoif",
-      "value": 22.2
-    },
-    {
-      "id": "teste da silva",
-      "date": "Nov 14, 2024 12:23:56 AM",
-      "title": "asfdoif",
-      "value": 22.2
-    },
-    {
-      "id": "247d3900-74b8-4fab-ad75-40e3b3563591",
-      "date": "Nov 14, 2024 3:19:14 PM",
-      "title": "agua",
-      "value": 200
+      "id": "0c9242a3-d900-4b3b-b2dd-7b3f43c71f60",
+      "date": "Nov 15, 2024 6:17:18 PM",
+      "title": "dasdsad",
+      "value": 0.3
     }
   ],
-  "expenses": [
-    {
-      "date": "Nov 14, 2024 12:23:56 AM",
-      "id": "teste da silva",
-      "title": "asfdoif",
-      "value": 22.2
-    },
-    {
-      "id": "teste da silva",
-      "date": "Nov 14, 2024 12:23:56 AM",
-      "title": "asfdoif",
-      "value": 22.2
-    },
-    {
-      "id": "teste da silva",
-      "date": "Nov 14, 2024 12:23:56 AM",
-      "title": "asfdoif",
-      "value": 22.2
-    },
-    {
-      "id": "550f013f-b8bd-4163-88a4-f78544347770",
-      "date": "Nov 14, 2024 3:18:40 PM",
-      "title": "Energia",
-      "value": 33330
-    }
-  ]
+  "expenses": []
 }

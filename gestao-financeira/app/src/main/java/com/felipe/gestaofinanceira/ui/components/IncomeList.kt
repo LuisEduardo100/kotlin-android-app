@@ -6,12 +6,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.felipe.gestaofinanceira.ui.viewmodel.IncomeListViewModel
 
 @Composable
 fun IncomeList(
-    incomeListViewModel: IncomeListViewModel = viewModel()
-
+    incomeListViewModel: IncomeListViewModel = viewModel(),
+    navController: NavController
 ) {
 
     incomeListViewModel.getIncomeList()
@@ -19,7 +21,7 @@ fun IncomeList(
 
     LazyColumn() {
         items(incomes) { income ->
-            IncomeItem(income)
+            IncomeItem(income, navController)
         }
     }
 
@@ -28,5 +30,5 @@ fun IncomeList(
 @Preview(showBackground = true)
 @Composable
 fun IncomeListPreview() {
-    IncomeList()
+    IncomeList(navController = rememberNavController())
 }

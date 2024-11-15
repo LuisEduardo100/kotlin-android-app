@@ -11,7 +11,7 @@ import retrofit2.http.Path
 
 interface IncomeApiService {
     @GET("/income/{id}")
-    suspend fun get(@Path("id") id: String): Response<Income>
+    suspend fun get(@Path("id") id: String): Response<Income?>
 
     @GET("/income")
     suspend fun getAll(): Response<List<Income>>

@@ -6,11 +6,13 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import com.felipe.gestaofinanceira.ui.viewmodel.ExpenseListViewModel
 
 @Composable
 fun ExpenseList(
-    expenseListViewModel: ExpenseListViewModel = viewModel()
+    expenseListViewModel: ExpenseListViewModel = viewModel(),
+    navController: NavController
 ) {
 
     expenseListViewModel.getExpenseList()
@@ -18,7 +20,7 @@ fun ExpenseList(
 
     LazyColumn() {
         items(expenses) { expense ->
-            ExpenseItem(expense)
+            ExpenseItem(expense, navController)
         }
     }
 

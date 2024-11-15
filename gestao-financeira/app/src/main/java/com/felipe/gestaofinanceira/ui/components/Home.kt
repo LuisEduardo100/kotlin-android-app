@@ -1,5 +1,6 @@
 package com.felipe.gestaofinanceira.ui.components
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -25,6 +26,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -35,14 +37,24 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
+import com.felipe.gestaofinanceira.data.repository.IncomeRepository
+import com.felipe.gestaofinanceira.ui.viewmodel.ExpenseListViewModel
+import com.felipe.gestaofinanceira.ui.viewmodel.IncomeListViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Home(navControl: NavHostController) {
+fun Home(
+    navControl: NavHostController,
+    incomeViewModel: IncomeListViewModel = viewModel(),
+    expenseViewModel: ExpenseListViewModel = viewModel()
+) {
     var billHandler by remember { mutableStateOf("Income") }
 
     val btnModifier = Modifier
@@ -51,52 +63,10 @@ fun Home(navControl: NavHostController) {
 
     NavHost(navController = navControl, startDestination = "Home") {
         composable(route = "Home") {
-            Scaffold(
-                topBar = {
-                    TopAppBar(
-                        colors = TopAppBarDefaults.topAppBarColors(
-                            containerColor = MaterialTheme.colorScheme.primaryContainer,
-                            titleContentColor = MaterialTheme.colorScheme.primary,
-                        ),
-                        title = {
-                            Text("Financial Gaps")
-                        }
-                    )
-                },
-                bottomBar = {
-                    BottomAppBar(
-                        containerColor = MaterialTheme.colorScheme.primaryContainer,
-                        contentColor = MaterialTheme.colorScheme.primary,
-                    ) {
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.SpaceEvenly
-                        ) {
-                            IconButton(onClick = {
-                                navControl.navigate("Home")
-                            }) {
-                                Icon(
-                                    imageVector = Icons.Default.Home,
-                                    contentDescription = "Home"
-                                )
-                            }
-                            IconButton(onClick = {
-                                navControl.navigate("NewBilling")
-                            }) {
-                                Icon(
-                                    imageVector = Icons.Default.Add,
-                                    contentDescription = "Adicionar Despesa/Renda"
-                                )
-                            }
-                            IconButton(onClick = { /* Abrir perfil do usuário */ }) {
-                                Icon(
-                                    imageVector = Icons.Default.AccountCircle,
-                                    contentDescription = "Perfil do Usuário"
-                                )
-                            }
-                        }
-                    }
-                },
+            CustomScaffold(
+                title = "Financial Gaps",
+                onNavigateHome = { navControl.navigate("Home") },
+                onNavigateNewBilling = { navControl.navigate("NewBilling") },
             ) { innerPadding ->
                 Box(modifier = Modifier.padding(innerPadding)) {
                     Column(
@@ -145,7 +115,7 @@ fun Home(navControl: NavHostController) {
                                 .background(color = Color(73, 93, 146))
                                 .align(Alignment.CenterHorizontally)
                         ) {
-                            if (billHandler == "Income") IncomeList() else ExpenseList()
+                            if (billHandler == "Income") IncomeList(navController = navControl) else ExpenseList(navController = navControl)
                         }
                     }
                 }
@@ -153,6 +123,26 @@ fun Home(navControl: NavHostController) {
         }
         composable(route = "NewBilling") {
             BillingForm(navControl)
+        }
+        composable(
+            route = "EditIncome/{id}",
+            arguments = listOf(navArgument("id") { type = NavType.StringType })
+        ) {
+            val id = it.arguments?.getString("id")!!
+            incomeViewModel.getIncome(id)
+
+            val income = incomeViewModel.income.collectAsState().value
+            BillingForm(navControl, income = income)
+        }
+        composable(
+            route = "EditExpense/{id}",
+            arguments = listOf(navArgument("id") { type = NavType.StringType })
+        ) {
+            val id = it.arguments?.getString("id")!!
+            expenseViewModel.getExpense(id)
+
+            val expense = expenseViewModel.expense.collectAsState().value
+            BillingForm(navControl, expense = expense)
         }
     }
 }

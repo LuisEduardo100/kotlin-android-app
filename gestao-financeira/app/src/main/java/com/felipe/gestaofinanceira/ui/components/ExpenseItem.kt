@@ -1,6 +1,7 @@
 package com.felipe.gestaofinanceira.ui.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -22,20 +23,25 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.felipe.gestaofinanceira.data.datasource.model.Expense
 import com.felipe.gestaofinanceira.data.datasource.model.Income
 import java.util.Date
 
 @Composable
-fun ExpenseItem(expense: Expense) {
+fun ExpenseItem(expense: Expense, navController: NavController) {
     Spacer(modifier = Modifier.height(16.dp))
     Row(
         modifier = Modifier
             .padding(12.dp, 6.dp)
             .wrapContentHeight()
             .fillMaxWidth()
-            .background(Color(218, 226, 255)),
-        verticalAlignment = Alignment.CenterVertically
+            .background(Color(218, 226, 255))
+            .clickable {
+                navController.navigate("EditExpense/${expense.id}")
+            }, verticalAlignment = Alignment.CenterVertically
     ) {
         Box(
             modifier = Modifier
@@ -51,12 +57,10 @@ fun ExpenseItem(expense: Expense) {
             Text(
                 text = expense.title,
                 fontSize = 24.sp,
-                fontWeight = FontWeight(1000),
-
+                fontWeight = FontWeight(1000)
                 )
             Text(
-                fontSize = 12.sp,
-                text = "${expense.date}"
+                fontSize = 12.sp, text = "${expense.date}"
             )
         }
 
@@ -66,9 +70,7 @@ fun ExpenseItem(expense: Expense) {
             modifier = Modifier
                 .size(width = 100.dp, height = 70.dp)
                 .clip(RectangleShape)
-                .background(Color(201, 80, 80))
-            ,
-            contentAlignment = Alignment.Center
+                .background(Color(201, 80, 80)), contentAlignment = Alignment.Center
         ) {
             Text(
                 text = "R$${"%.2f".format(expense.value)}",
@@ -83,12 +85,10 @@ fun ExpenseItem(expense: Expense) {
 @Preview(showBackground = true)
 @Composable
 fun ExpenseItemPreview() {
-    IncomeItem(
-        Income(
-            id = "1",
-            title = "Bico",
-            date = Date(),
-            value = 20.00
-        )
+    ExpenseItem(
+        Expense(
+            id = "1", title = "Bico", date = Date(), value = 20.00
+        ),
+        navController = rememberNavController()
     )
 }

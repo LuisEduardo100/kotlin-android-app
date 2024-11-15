@@ -7,9 +7,9 @@ import com.felipe.gestaofinanceira.data.datasource.model.Income
 class IncomeRepository(
     private val incomeApiDataSource: IncomeApiDataSource = IncomeApiDataSource()
 ) {
-    suspend fun get(id: String): Income {
+    suspend fun get(id: String): Income? {
         val result = incomeApiDataSource.get(id)
-        return result.getOrThrow()
+        return result.getOrNull()
     }
 
     suspend fun getAll(): List<Income> {
